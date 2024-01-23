@@ -2,6 +2,7 @@ const express = require("express");
 const connectdb = require("./database.js");
 const app = express();
 const bookRouter = require("./api/books/router.js");
+const authorRouter = require("./api/authors/router.js");
 const morgan = require("morgan");
 const cors = require("cors");
 const PORT = 8000;
@@ -9,6 +10,7 @@ const PORT = 8000;
 app.use(morgan("dev"));
 app.use(cors());
 app.use("/api/books", bookRouter);
+app.use("/api/authors", authorRouter);
 
 app.use((req, res, next) => {
   return res.status(404).json({ message: "Path not found" });

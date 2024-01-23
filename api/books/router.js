@@ -12,7 +12,7 @@ const {
 } = require("./controller.js");
 
 bookRouter.get("/", getAllBooks);
-bookRouter.post("/", upload.single("bookPicture"), createABook);
+bookRouter.post("/:authorID", upload.single("bookPicture"), createABook);
 bookRouter.get("/:_id", getBookById);
 bookRouter.delete("/:_id", deleteBookById);
 bookRouter.put("/:_id", upload.single("bookPicture"), updateBookById);

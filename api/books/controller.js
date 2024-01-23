@@ -1,4 +1,5 @@
 const Book = require("../../models/Book.js");
+const Author = require("../../models/Author.js");
 const getAllBooks = async (req, res, next) => {
   try {
     const books = await Book.find();
@@ -10,10 +11,14 @@ const getAllBooks = async (req, res, next) => {
 
 const createABook = async (req, res, next) => {
   try {
+    const { authorID } = req.params;
     if (req.file) {
       req.body.image = req.file.path;
     }
+    req.body.author = authorID;
     const book = await Book.create(req.body);
+    const author = await Author.findById(authorID);
+    await author.updateOne({ $push: { books: book._id } });
     return res.status(201).json({ message: book });
   } catch (error) {
     console.log(error);
